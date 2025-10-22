@@ -1,0 +1,15 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Money bag body -->
+  <rect x="12" y="20" width="40" height="36" rx="4" fill="#f5f5dc" stroke="#b8860b" stroke-width="2"/>
+  
+  <!-- Bag tie -->
+  <rect x="22" y="16" width="20" height="6" rx="2" fill="#b8860b"/>
+  
+  <!-- Dollar sign -->
+  <text x="32" y="45" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#b8860b" text-anchor="middle">$</text>
+  
+  <!-- Pixelated eyes (simplified) -->
+  <rect x="22" y="32" width="4" height="4" fill="#00ff41"/>
+  <rect x="38" y="32" width="4" height="4" fill="#00ff41"/>
+</svg>
+
