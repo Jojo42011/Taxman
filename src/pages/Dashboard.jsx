@@ -104,9 +104,31 @@ const Dashboard = () => {
             <h1 className="text-6xl md:text-7xl font-headline text-taxman-gold mb-4 text-center">
               COMMUNITY HUB
             </h1>
-            <p className="text-center text-taxman-offwhite/70 text-lg">
+            <p className="text-center text-taxman-offwhite/70 text-lg mb-8">
               Donate. Get airdrops. Burn tokens. Build together.
             </p>
+            
+            {/* Quick Actions */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <button
+                className="btn-taxman bg-taxman-gold text-taxman-black hover:bg-taxman-gold/90"
+                onClick={() => {
+                  if (window.playSound) window.playSound('click')
+                  window.location.href = '/rewards'
+                }}
+              >
+                VIEW REWARDS & TIERS
+              </button>
+              <button
+                className="btn-taxman text-taxman-green border-taxman-green hover:bg-taxman-green/10"
+                onClick={() => {
+                  if (window.playSound) window.playSound('click')
+                  window.location.href = '/manifesto'
+                }}
+              >
+                HOW IT WORKS
+              </button>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -153,6 +175,38 @@ const Dashboard = () => {
             </motion.div>
           </div>
 
+          {/* Current Tier Status */}
+          <motion.div
+            className="bg-taxman-charcoal border-2 border-taxman-gold/30 p-6 mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            <div className="flex flex-col md:flex-row items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-headline text-taxman-gold mb-2">YOUR STATUS</h2>
+                <div className="text-4xl font-headline text-taxman-green mb-2">{userStatus}</div>
+                <div className="text-sm text-taxman-offwhite/70">
+                  ${userDonations.toLocaleString()} donated • Next tier at ${
+                    userStatus === 'Citizen' ? '0.02' : 
+                    userStatus === 'Contributor' ? '0.2' : 
+                    userStatus === 'Supporter' ? '2' : 
+                    userStatus === 'VIP' ? '20' : 'Max tier'
+                  }
+                </div>
+              </div>
+              <button
+                className="btn-taxman bg-taxman-gold text-taxman-black hover:bg-taxman-gold/90 mt-4 md:mt-0"
+                onClick={() => {
+                  if (window.playSound) window.playSound('click')
+                  window.location.href = '/rewards'
+                }}
+              >
+                VIEW ALL REWARDS
+              </button>
+            </div>
+          </motion.div>
+
           {/* Chart and Most Wanted */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
             {/* Price Chart */}
@@ -198,7 +252,7 @@ const Dashboard = () => {
             <div className="lg:col-span-2 bg-taxman-charcoal border-2 border-taxman-green/30 p-8">
               <h2 className="text-3xl font-headline text-taxman-green mb-4">DONATE TO THE TREASURY</h2>
               <p className="text-taxman-offwhite/70 mb-6">
-                Send any amount to our treasury wallet. 50% goes to airdrops, 50% to burns. No wallet connection required.
+                Send any amount to our treasury wallet. 50% goes to airdrops, 50% to burns and bot fighting. No wallet connection required.
               </p>
 
               <div className="bg-taxman-black/50 p-6 mb-6">
@@ -276,7 +330,7 @@ const Dashboard = () => {
                   ${burnPool.toLocaleString()}
                 </div>
                 <div className="text-xs text-taxman-offwhite/50">
-                  Token burns, floor support
+                  Token burns, bot fighting, floor support
                 </div>
               </div>
 

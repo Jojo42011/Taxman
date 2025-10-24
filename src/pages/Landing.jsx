@@ -141,17 +141,17 @@ const Landing = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl font-headline text-taxman-gold mb-6">
-              TREASURY WALLET
+              CONTRACT ADDRESS
             </h2>
             <div className="bg-taxman-charcoal border-2 border-taxman-gold/30 p-6 rounded-lg">
               <div className="text-taxman-offwhite/50 text-lg font-mono mb-2">
                 COMING SOON
               </div>
               <div className="text-taxman-green text-sm">
-                Treasury wallet address will be available at launch
+                $TAXMAN token contract will be deployed on Solana mainnet
               </div>
               <div className="text-taxman-gold/70 text-xs mt-2">
-                Send donations directly - no wallet connection required
+                Contract address will be available at launch
               </div>
             </div>
           </motion.div>
@@ -185,7 +185,7 @@ const Landing = () => {
                 },
                 {
                   title: 'TOKEN BURNS',
-                  desc: '50% burns tokens and supports the chart floor.',
+                  desc: '50% burns tokens, fights bots, and supports the chart floor.',
                   icon: '🔥'
                 }
               ].map((item, i) => (

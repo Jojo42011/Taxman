@@ -20,7 +20,7 @@ const Manifesto = () => {
     {
       id: 2,
       title: 'RULE 2: THE 50/50 SPLIT',
-      content: '50% goes to daily airdrops, NFTs, and status roles. 50% burns tokens and supports the floor.',
+      content: '50% goes to daily airdrops, NFTs, and status roles. 50% burns tokens, fights bots, and supports the floor.',
       details: [
         '50% to airdrop pool for community rewards',
         'Daily token lotteries and NFT drops',

@@ -58,7 +58,7 @@ const Propaganda = () => {
       id: 7,
       type: 'stat',
       title: 'BURN MECHANICS',
-      content: '50% burns tokens daily. Deflationary pressure. Chart support.',
+      content: '50% burns tokens daily. Fights bots. Deflationary pressure. Chart support.',
       image: null,
       bgColor: 'bg-taxman-gold'
     },
