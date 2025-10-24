@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import TaxmanMascot from '../components/TaxmanMascot'
 
 const Manifesto = () => {
   const [stampedClauses, setStampedClauses] = useState({})
@@ -9,35 +8,35 @@ const Manifesto = () => {
   const clauses = [
     {
       id: 1,
-      title: 'RULE 1: THE HUNT',
-      content: 'Zero entry fee. 100% fun. Hunt bots, earn points, get rewards. This is a game, not a job!',
+      title: 'RULE 1: THE DONATIONS',
+      content: 'Anyone can donate any amount to the community wallet. Zero barriers. Maximum transparency.',
       details: [
-        'Join for free - no barriers to entry',
-        'Identify bot patterns and behaviors',
-        'Earn points for correct identifications',
-        'Unlock achievements and special rewards'
+        'Donate any amount - no minimum required',
+        'All donations tracked on blockchain',
+        'Real-time pool updates and transparency',
+        'Community wallet address publicly visible'
       ]
     },
     {
       id: 2,
-      title: 'RULE 2: THE REWARDS',
-      content: 'Top auditors get exclusive memes, Discord roles, and future airdrops. The community decides the prizes!',
+      title: 'RULE 2: THE 50/50 SPLIT',
+      content: '50% goes to daily airdrops, NFTs, and status roles. 50% burns tokens and supports the floor.',
       details: [
-        'Exclusive memes for top hunters',
-        'Special Discord roles and badges',
-        'Future token airdrops for legends',
-        'Community voting on new rewards'
+        '50% to airdrop pool for community rewards',
+        'Daily token lotteries and NFT drops',
+        '50% to burn pool for token deflation',
+        'Strategic floor support and buybacks'
       ]
     },
     {
       id: 3,
-      title: 'RULE 3: THE COMMUNITY',
-      content: 'We see every transaction. We identify every bot. We meme about it. Together we hunt!',
+      title: 'RULE 3: THE REWARDS',
+      content: 'Higher donations = higher status = better airdrop chances. The community builds together!',
       details: [
-        'Real-time bot hunting challenges',
-        'Community voting on suspicious wallets',
-        'Meme creation and sharing tools',
-        'Leaderboards and friendly competition'
+        'Status levels: Citizen → Contributor → Supporter → VIP → Legend',
+        'Higher status = better airdrop odds',
+        'Exclusive NFTs and Discord roles',
+        'Community governance and voting rights'
       ]
     }
   ]
@@ -61,10 +60,10 @@ const Manifesto = () => {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-7xl md:text-8xl font-headline text-taxman-gold mb-6">
-              THE GAME RULES
+              THE COMMUNITY MODEL
             </h1>
             <p className="text-xl text-taxman-offwhite/80 max-w-3xl mx-auto">
-              How to hunt bots, earn memes, and become a legendary auditor. Let's make this fun! 🎮
+              How donations work, airdrops are distributed, and tokens are burned. Build together! 💰
             </p>
           </motion.div>
         </div>
@@ -150,9 +149,8 @@ const Manifesto = () => {
                     animate={{ x: 0, opacity: 1 }}
                     exit={{ x: -50, opacity: 0 }}
                   >
-                    <TaxmanMascot expression="determined" size="small" />
                     <div className="text-center mt-2 text-sm text-taxman-green font-headline">
-                      CLICK TO LOCK IN
+                      CLICK TO APPROVE
                     </div>
                   </motion.div>
                 )}
@@ -173,13 +171,17 @@ const Manifesto = () => {
           >
             <div className="border-4 border-taxman-gold p-12 bg-taxman-black/50">
               <h2 className="text-5xl font-headline text-taxman-offwhite mb-6">
-                LET'S HUNT SOME BOTS! 🎯
+                LET'S BUILD THE COMMUNITY! 💰
               </h2>
               <p className="text-xl text-taxman-gold mb-8">
-                This is not just a game. This is a community. This is fun, gamified! 🎮
+                This is not just donations. This is a movement. This is community-driven! 🚀
               </p>
-              <div className="flex justify-center">
-                <TaxmanMascot expression="cool" size="medium" />
+              <div className="flex justify-center mb-6">
+                <img 
+                  src="/taxman-hero-fighting-bots.jpg" 
+                  alt="The Taxman fighting bots in cyberpunk city"
+                  className="w-full max-w-md h-auto rounded-lg shadow-2xl border-4 border-taxman-gold/30"
+                />
               </div>
             </div>
           </motion.div>

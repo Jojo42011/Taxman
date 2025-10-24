@@ -1,20 +1,21 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
-import TaxmanMascot from '../components/TaxmanMascot'
 
 const Dashboard = () => {
-  const [totalLiberated, setTotalLiberated] = useState(1247893)
-  const [botsAudited, setBotsAudited] = useState(342)
-  const [nextRedistribution, setNextRedistribution] = useState(3600)
-  const [auditScore, setAuditScore] = useState(0)
-  const [selectedWallet, setSelectedWallet] = useState(null)
+  const [totalDonated, setTotalDonated] = useState(2847392)
+  const [airdropPool, setAirdropPool] = useState(1423696)
+  const [burnPool, setBurnPool] = useState(1423696)
+  const [nextAirdrop, setNextAirdrop] = useState(3600)
+  const [userDonations, setUserDonations] = useState(0)
+  const [userStatus, setUserStatus] = useState('Citizen')
+  const [donationAmount, setDonationAmount] = useState('')
   const [leaderboard, setLeaderboard] = useState([
-    { rank: 1, address: '0x742d...a3f1', score: 1520 },
-    { rank: 2, address: '0x8c91...7b2e', score: 1340 },
-    { rank: 3, address: '0x3f5a...c9d4', score: 1180 },
-    { rank: 4, address: '0x6d8e...1a7f', score: 980 },
-    { rank: 5, address: '0x9b2c...4e8a', score: 850 },
+    { rank: 1, address: '0x742d...a3f1', donated: 50000, status: 'Legend' },
+    { rank: 2, address: '0x8c91...7b2e', donated: 35000, status: 'VIP' },
+    { rank: 3, address: '0x3f5a...c9d4', donated: 25000, status: 'VIP' },
+    { rank: 4, address: '0x6d8e...1a7f', donated: 15000, status: 'Supporter' },
+    { rank: 5, address: '0x9b2c...4e8a', donated: 10000, status: 'Supporter' },
   ])
 
   // Mock chart data
@@ -28,58 +29,32 @@ const Dashboard = () => {
     { time: '24:00', price: 0.000082 },
   ]
 
-  // Mock wallet data for audit game
-  const walletPool = [
-    { 
-      address: '0xa1b2...c3d4', 
-      isBot: true, 
-      transactions: 847, 
-      avgHoldTime: '2m',
-      pattern: 'Rapid buy/sell cycles detected'
-    },
-    { 
-      address: '0xe5f6...g7h8', 
-      isBot: false, 
-      transactions: 23, 
-      avgHoldTime: '14d',
-      pattern: 'Normal trading behavior'
-    },
-    { 
-      address: '0xij9k...l0mn', 
-      isBot: true, 
-      transactions: 1203, 
-      avgHoldTime: '45s',
-      pattern: 'MEV bot signature detected'
-    },
-    { 
-      address: '0xop1q...r2st', 
-      isBot: false, 
-      transactions: 8, 
-      avgHoldTime: '28d',
-      pattern: 'Long-term holder'
-    },
+  // Recent donations
+  const recentDonations = [
+    { address: '0xa1b2...c3d4', amount: 5000, time: '2m ago' },
+    { address: '0xe5f6...g7h8', amount: 2500, time: '5m ago' },
+    { address: '0xij9k...l0mn', amount: 10000, time: '8m ago' },
+    { address: '0xop1q...r2st', amount: 1500, time: '12m ago' },
   ]
 
-  // Most wanted wallets (bots with highest tax collected)
-  const mostWanted = [
-    { address: '0x7f3e...9a2b', taxCollected: 42150 },
-    { address: '0x4c8d...1e5f', taxCollected: 38920 },
-    { address: '0x9b1a...6c7d', taxCollected: 31740 },
-    { address: '0x2e5f...8g3h', taxCollected: 27580 },
+  // Upcoming airdrops
+  const upcomingAirdrops = [
+    { type: 'Token Airdrop', pool: 500000, time: '2h 15m' },
+    { type: 'NFT Drop', pool: 200000, time: '6h 30m' },
+    { type: 'Status Role', pool: 100000, time: '12h 45m' },
   ]
 
   useEffect(() => {
     // Animate counters
     const interval = setInterval(() => {
-      setTotalLiberated(prev => prev + Math.floor(Math.random() * 100))
-      if (Math.random() > 0.7) {
-        setBotsAudited(prev => prev + 1)
-      }
+      setTotalDonated(prev => prev + Math.floor(Math.random() * 100))
+      setAirdropPool(prev => prev + Math.floor(Math.random() * 50))
+      setBurnPool(prev => prev + Math.floor(Math.random() * 50))
     }, 3000)
 
     // Countdown timer
     const timer = setInterval(() => {
-      setNextRedistribution(prev => prev > 0 ? prev - 1 : 3600)
+      setNextAirdrop(prev => prev > 0 ? prev - 1 : 3600)
     }, 1000)
 
     return () => {
@@ -95,28 +70,25 @@ const Dashboard = () => {
     return `${h}h ${m}m ${s}s`
   }
 
-  const getRandomWallet = () => {
-    const randomIndex = Math.floor(Math.random() * walletPool.length)
-    setSelectedWallet(walletPool[randomIndex])
-  }
-
-  const handleAudit = (verdict) => {
-    if (!selectedWallet) return
+  const handleDonation = () => {
+    if (!donationAmount || donationAmount <= 0) return
     
-    const isCorrect = (verdict === 'bot' && selectedWallet.isBot) || 
-                     (verdict === 'clear' && !selectedWallet.isBot)
+    if (window.playSound) window.playSound('cash')
     
-    if (isCorrect) {
-      if (window.playSound) window.playSound('cash')
-      setAuditScore(prev => prev + 10)
-    } else {
-      if (window.playSound) window.playSound('error')
-      setAuditScore(prev => Math.max(0, prev - 5))
-    }
+    const amount = parseFloat(donationAmount)
+    setUserDonations(prev => prev + amount)
+    setTotalDonated(prev => prev + amount)
+    setAirdropPool(prev => prev + (amount * 0.5))
+    setBurnPool(prev => prev + (amount * 0.5))
     
-    setTimeout(() => {
-      setSelectedWallet(null)
-    }, 1500)
+    // Update user status based on total donations
+    const totalUserDonations = userDonations + amount
+    if (totalUserDonations >= 50000) setUserStatus('Legend')
+    else if (totalUserDonations >= 25000) setUserStatus('VIP')
+    else if (totalUserDonations >= 10000) setUserStatus('Supporter')
+    else if (totalUserDonations >= 1000) setUserStatus('Contributor')
+    
+    setDonationAmount('')
   }
 
   return (
@@ -130,10 +102,10 @@ const Dashboard = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-6xl md:text-7xl font-headline text-taxman-gold mb-4 text-center">
-              BOT HUNTER HQ 🎯
+              COMMUNITY HUB
             </h1>
             <p className="text-center text-taxman-offwhite/70 text-lg">
-              Real-time bot hunting with meme rewards! Let's catch some bots! 🎮
+              Donate. Get airdrops. Burn tokens. Build together.
             </p>
           </motion.div>
         </div>
@@ -150,9 +122,9 @@ const Dashboard = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
             >
-              <div className="text-taxman-gold/70 text-sm font-headline mb-2">BOTS HUNTED TODAY</div>
+              <div className="text-taxman-gold/70 text-sm font-headline mb-2">TOTAL DONATED</div>
               <div className="text-4xl font-headline text-taxman-green">
-                {botsAudited} 🎯
+                ${totalDonated.toLocaleString()}
               </div>
             </motion.div>
 
@@ -162,9 +134,9 @@ const Dashboard = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <div className="text-taxman-gold/70 text-sm font-headline mb-2">YOUR HUNT STREAK</div>
+              <div className="text-taxman-gold/70 text-sm font-headline mb-2">NEXT AIRDROP</div>
               <div className="text-4xl font-headline text-taxman-green">
-                7 🔥
+                {formatTime(nextAirdrop)}
               </div>
             </motion.div>
 
@@ -174,9 +146,9 @@ const Dashboard = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <div className="text-taxman-gold/70 text-sm font-headline mb-2">MEMES EARNED</div>
-              <div className="text-4xl font-headline text-taxman-red">
-                23 🏆
+              <div className="text-taxman-gold/70 text-sm font-headline mb-2">YOUR STATUS</div>
+              <div className="text-4xl font-headline text-taxman-green">
+                {userStatus}
               </div>
             </motion.div>
           </div>
@@ -184,61 +156,35 @@ const Dashboard = () => {
           {/* Chart and Most Wanted */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
             {/* Price Chart */}
-            <div className="lg:col-span-2 bg-taxman-charcoal border-2 border-taxman-gold/30 p-6 relative">
+            <div className="lg:col-span-2 bg-taxman-charcoal border-2 border-taxman-gold/30 p-6">
               <h2 className="text-2xl font-headline text-taxman-gold mb-4">$TAXMAN PRICE ACTION</h2>
-              
-              {/* Coming Soon Overlay */}
-              <div className="absolute inset-0 bg-taxman-black/80 flex items-center justify-center z-10 rounded-lg">
+              <div className="flex items-center justify-center h-[300px]">
                 <div className="text-center">
-                  <div className="text-6xl font-headline text-taxman-gold mb-4 animate-pulse">
+                  <div className="text-4xl font-headline text-taxman-gold mb-2">
                     COMING SOON
                   </div>
-                  <div className="text-xl text-taxman-offwhite mb-2">
-                    Live Price Data
-                  </div>
-                  <div className="text-sm text-taxman-gold/70">
-                    Real-time charts powered by DEX APIs
+                  <div className="text-taxman-offwhite/50">
+                    Live price chart will be available after launch
                   </div>
                 </div>
               </div>
-              
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={chartData}>
-                  <XAxis dataKey="time" stroke="#b8860b" />
-                  <YAxis stroke="#b8860b" />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#1a1a1a', 
-                      border: '2px solid #b8860b',
-                      color: '#f5f5dc'
-                    }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="price" 
-                    stroke="#00ff41" 
-                    strokeWidth={3}
-                    dot={{ fill: '#00ff41', r: 4 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
             </div>
 
-            {/* Most Wanted */}
-            <div className="bg-taxman-charcoal border-2 border-taxman-red/50 p-6">
-              <h2 className="text-2xl font-headline text-taxman-red mb-4">BOT HALL OF SHAME 😈</h2>
+            {/* Recent Donations */}
+            <div className="bg-taxman-charcoal border-2 border-taxman-green/50 p-6">
+              <h2 className="text-2xl font-headline text-taxman-green mb-4">RECENT DONATIONS</h2>
               <div className="space-y-3">
-                {mostWanted.map((wallet, i) => (
+                {recentDonations.map((donation, i) => (
                   <motion.div
                     key={i}
-                    className="bg-taxman-black/50 p-3 border-l-4 border-taxman-red"
+                    className="bg-taxman-black/50 p-3 border-l-4 border-taxman-green"
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
                   >
-                    <div className="font-mono text-sm text-taxman-offwhite">{wallet.address}</div>
-                    <div className="text-taxman-red font-headline">
-                      {wallet.taxCollected.toLocaleString()} POINTS EARNED
+                    <div className="font-mono text-sm text-taxman-offwhite">{donation.address}</div>
+                    <div className="text-taxman-green font-headline">
+                      ${donation.amount.toLocaleString()} • {donation.time}
                     </div>
                   </motion.div>
                 ))}
@@ -246,116 +192,107 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Audit Game */}
+          {/* Donation Interface */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Game Panel */}
+            {/* Donation Panel */}
             <div className="lg:col-span-2 bg-taxman-charcoal border-2 border-taxman-green/30 p-8">
-              <h2 className="text-3xl font-headline text-taxman-green mb-4">BOT HUNTER GAME 🎮</h2>
+              <h2 className="text-3xl font-headline text-taxman-green mb-4">DONATE TO THE TREASURY</h2>
               <p className="text-taxman-offwhite/70 mb-6">
-                Hunt down suspicious bots! Earn points, unlock memes, and become a legendary hunter! 🎯
+                Send any amount to our treasury wallet. 50% goes to airdrops, 50% to burns. No wallet connection required.
               </p>
 
-              <div className="bg-taxman-black/50 p-6 mb-6 min-h-[200px]">
-                {!selectedWallet ? (
-                  <div className="flex flex-col items-center justify-center h-full py-8">
-                    <TaxmanMascot expression="determined" size="small" />
+              <div className="bg-taxman-black/50 p-6 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* QR Code Section */}
+                  <div className="flex flex-col items-center space-y-4">
+                    <div className="text-taxman-gold/70 text-sm font-headline mb-2">
+                      SCAN TO DONATE
+                    </div>
+                    <div className="bg-taxman-offwhite p-4 rounded-lg">
+                      <div className="w-48 h-48 bg-taxman-charcoal flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="text-4xl mb-2">📱</div>
+                          <div className="text-taxman-offwhite text-sm">QR CODE</div>
+                          <div className="text-taxman-green text-xs">COMING SOON</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Wallet Address Section */}
+                  <div className="flex flex-col space-y-4">
+                    <div className="text-taxman-gold/70 text-sm font-headline mb-2">
+                      TREASURY WALLET ADDRESS
+                    </div>
+                    <div className="bg-taxman-charcoal border-2 border-taxman-gold/30 p-4 rounded-lg">
+                      <div className="text-taxman-offwhite/50 text-sm font-mono break-all mb-2">
+                        COMING SOON
+                      </div>
+                      <div className="text-taxman-green text-xs">
+                        Solana mainnet address
+                      </div>
+                    </div>
                     <button
-                      className="btn-taxman bg-taxman-green text-taxman-black mt-6"
-                      onClick={() => {
-                        if (window.playSound) window.playSound('click')
-                        getRandomWallet()
-                      }}
+                      className="btn-taxman bg-taxman-green text-taxman-black w-full"
+                      disabled
                     >
-                      START HUNTING
+                      COPY ADDRESS - COMING SOON
                     </button>
                   </div>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                  >
-                    <div className="mb-4">
-                      <div className="text-sm text-taxman-gold/70 mb-1">WALLET ADDRESS</div>
-                      <div className="text-2xl font-mono text-taxman-offwhite">{selectedWallet.address}</div>
-                    </div>
-                    
-                    <div className="grid grid-cols-3 gap-4 mb-4">
-                      <div>
-                        <div className="text-sm text-taxman-gold/70">TRANSACTIONS</div>
-                        <div className="text-xl font-headline text-taxman-offwhite">
-                          {selectedWallet.transactions}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-sm text-taxman-gold/70">AVG HOLD TIME</div>
-                        <div className="text-xl font-headline text-taxman-offwhite">
-                          {selectedWallet.avgHoldTime}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-sm text-taxman-gold/70">PATTERN</div>
-                        <div className="text-sm text-taxman-offwhite">
-                          {selectedWallet.pattern}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-4">
-                      <button
-                        className="btn-taxman bg-taxman-red text-taxman-offwhite flex-1"
-                        onClick={() => handleAudit('bot')}
-                      >
-                        HUNT BOT! 🎯
-                      </button>
-                      <button
-                        className="btn-taxman bg-taxman-green text-taxman-black flex-1"
-                        onClick={() => handleAudit('clear')}
-                      >
-                        CLEAR ✅
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
+                </div>
               </div>
 
-              <div className="text-center">
-                <div className="text-sm text-taxman-gold/70 mb-1">YOUR HUNT SCORE</div>
-                <div className="text-4xl font-headline text-taxman-green">{auditScore} 🏆</div>
+              <div className="grid grid-cols-2 gap-4 text-center">
+                <div>
+                  <div className="text-sm text-taxman-gold/70 mb-1">YOUR DONATIONS</div>
+                  <div className="text-3xl font-headline text-taxman-green">${userDonations.toLocaleString()}</div>
+                </div>
+                <div>
+                  <div className="text-sm text-taxman-gold/70 mb-1">YOUR STATUS</div>
+                  <div className="text-3xl font-headline text-taxman-gold">{userStatus}</div>
+                </div>
               </div>
             </div>
 
-            {/* Leaderboard */}
+            {/* Pool Status */}
             <div className="bg-taxman-charcoal border-2 border-taxman-gold/30 p-6">
-              <h2 className="text-2xl font-headline text-taxman-gold mb-4">TOP HUNTERS 🏆</h2>
-              <div className="space-y-3">
-                {leaderboard.map((entry) => (
-                  <motion.div
-                    key={entry.rank}
-                    className={`p-3 border-l-4 ${
-                      entry.rank === 1 ? 'bg-taxman-gold/10 border-taxman-gold' :
-                      entry.rank === 2 ? 'bg-taxman-offwhite/5 border-taxman-offwhite' :
-                      entry.rank === 3 ? 'bg-taxman-gold/5 border-taxman-gold/50' :
-                      'bg-taxman-black/50 border-taxman-green/30'
-                    }`}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: entry.rank * 0.1 }}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <span className="font-headline text-2xl text-taxman-gold mr-2">
-                          #{entry.rank}
-                        </span>
-                        <span className="font-mono text-sm text-taxman-offwhite">
-                          {entry.address}
-                        </span>
-                      </div>
-                      <div className="text-taxman-green font-headline text-xl">
-                        {entry.score}
+              <h2 className="text-2xl font-headline text-taxman-gold mb-4">POOL STATUS</h2>
+              
+              {/* Airdrop Pool */}
+              <div className="mb-6">
+                <div className="text-taxman-green/70 text-sm font-headline mb-2">AIRDROP POOL (50%)</div>
+                <div className="text-3xl font-headline text-taxman-green mb-2">
+                  ${airdropPool.toLocaleString()}
+                </div>
+                <div className="text-xs text-taxman-offwhite/50">
+                  Daily lotteries, NFTs, status roles
+                </div>
+              </div>
+
+              {/* Burn Pool */}
+              <div className="mb-6">
+                <div className="text-taxman-red/70 text-sm font-headline mb-2">BURN POOL (50%)</div>
+                <div className="text-3xl font-headline text-taxman-red mb-2">
+                  ${burnPool.toLocaleString()}
+                </div>
+                <div className="text-xs text-taxman-offwhite/50">
+                  Token burns, floor support
+                </div>
+              </div>
+
+              {/* Upcoming Airdrops */}
+              <div>
+                <div className="text-taxman-gold/70 text-sm font-headline mb-3">UPCOMING AIRDROPS</div>
+                <div className="space-y-2">
+                  {upcomingAirdrops.map((airdrop, i) => (
+                    <div key={i} className="bg-taxman-black/50 p-2 border-l-2 border-taxman-green">
+                      <div className="text-xs text-taxman-offwhite">{airdrop.type}</div>
+                      <div className="text-sm font-headline text-taxman-green">
+                        ${airdrop.pool.toLocaleString()} • {airdrop.time}
                       </div>
                     </div>
-                  </motion.div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>

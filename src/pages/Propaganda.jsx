@@ -9,16 +9,16 @@ const Propaganda = () => {
     {
       id: 1,
       type: 'poster',
-      title: 'WANTED: Bot Wallets',
-      content: 'For crimes against the people. Reward: 8% tax.',
+      title: 'JOIN THE COMMUNITY',
+      content: 'Donate any amount. Get airdrops. Burn tokens. Build together.',
       image: null,
-      bgColor: 'bg-taxman-red'
+      bgColor: 'bg-taxman-green'
     },
     {
       id: 2,
       type: 'quote',
       title: 'The Revolution Will Be Tokenized',
-      content: '"When the people audit the elite, justice becomes inevitable." - The Taxman',
+      content: '"When the people donate to the people, the community becomes unstoppable." - The Taxman',
       image: null,
       bgColor: 'bg-taxman-gold'
     },
@@ -26,39 +26,39 @@ const Propaganda = () => {
       id: 3,
       type: 'stat',
       title: 'BY THE NUMBERS',
-      content: '$1.2M+ liberated from bots. 342 bad actors identified. 0 regrets.',
+      content: '$2.8M+ donated by community. 50% airdrops, 50% burns. 100% transparency.',
       image: null,
       bgColor: 'bg-taxman-green'
     },
     {
       id: 4,
       type: 'poster',
-      title: 'JOIN THE AUDIT',
-      content: 'Your wallet is your weapon. Your transactions are your votes.',
+      title: 'DAILY AIRDROPS',
+      content: 'Your donations fund daily lotteries, NFTs, and status roles.',
       image: null,
       bgColor: 'bg-taxman-charcoal'
     },
     {
       id: 5,
       type: 'quote',
-      title: 'Zero Entry. Eight Percent Exit.',
-      content: 'This is not a fee. This is justice.',
+      title: 'Fifty Fifty Split',
+      content: '50% to the community. 50% to burns. 100% to the movement.',
       image: null,
       bgColor: 'bg-taxman-black'
     },
     {
       id: 6,
       type: 'poster',
-      title: 'THE TAXMAN SEES ALL',
-      content: 'Every transaction. Every wallet. Every bot.',
+      title: 'STATUS LEVELS',
+      content: 'Citizen → Contributor → Supporter → VIP → Legend. Climb the ranks!',
       image: null,
       bgColor: 'bg-taxman-red'
     },
     {
       id: 7,
       type: 'stat',
-      title: 'REDISTRIBUTION IN ACTION',
-      content: '4% to LP. 4% to Treasury. 100% transparency.',
+      title: 'BURN MECHANICS',
+      content: '50% burns tokens daily. Deflationary pressure. Chart support.',
       image: null,
       bgColor: 'bg-taxman-gold'
     },
@@ -66,7 +66,7 @@ const Propaganda = () => {
       id: 8,
       type: 'quote',
       title: 'Power to the People',
-      content: '"They took everything. Now we take it back, one block at a time."',
+      content: '"We build together. We burn together. We rise together."',
       image: null,
       bgColor: 'bg-taxman-green'
     },
@@ -96,11 +96,11 @@ const Propaganda = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-6xl md:text-7xl font-headline text-taxman-gold mb-6">
-              DISSEMINATE THE NARRATIVE
+              SPREAD THE COMMUNITY
             </h1>
             <p className="text-xl text-taxman-offwhite/70 max-w-3xl mx-auto">
-              The revolution needs voices. Share these messages. Spread the truth. 
-              The elite controlled the narrative for too long.
+              The community needs voices. Share these messages. Spread the word. 
+              Build the revolution together.
             </p>
           </motion.div>
         </div>
@@ -200,7 +200,7 @@ const Propaganda = () => {
               {[
                 {
                   title: 'MEMES',
-                  desc: 'Create viral content that spreads the message',
+                  desc: 'Create viral content that spreads the community message',
                   icon: '🎨'
                 },
                 {
@@ -210,7 +210,7 @@ const Propaganda = () => {
                 },
                 {
                   title: 'POSTERS',
-                  desc: 'Design wanted posters for known bot wallets',
+                  desc: 'Design community posters and donation graphics',
                   icon: '📋'
                 }
               ].map((item, i) => (
@@ -243,13 +243,13 @@ const Propaganda = () => {
           >
             <div className="border-4 border-taxman-red p-12">
               <h2 className="text-5xl font-headline text-taxman-offwhite mb-6">
-                THE NARRATIVE IS OURS
+                THE COMMUNITY IS OURS
               </h2>
               <p className="text-xl text-taxman-gold mb-8">
-                Every share is a vote. Every meme is a weapon. Every voice matters.
+                Every share is a vote. Every meme is a weapon. Every donation matters.
               </p>
               <div className="text-6xl font-headline text-taxman-green">
-                SPREAD THE WORD
+                BUILD TOGETHER
               </div>
             </div>
           </motion.div>

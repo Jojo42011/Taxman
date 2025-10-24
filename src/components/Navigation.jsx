@@ -7,9 +7,9 @@ const Navigation = () => {
   const [hoveredItem, setHoveredItem] = useState(null)
 
   const navItems = [
-    { path: '/', label: 'THE GAME' },
-    { path: '/manifesto', label: 'RULES' },
-    { path: '/dashboard', label: 'HUNT HQ' },
+    { path: '/', label: 'HOME' },
+    { path: '/manifesto', label: 'HOW IT WORKS' },
+    { path: '/dashboard', label: 'COMMUNITY HUB' },
     { path: '/propaganda', label: 'MEMES' }
   ]
 

@@ -1,6 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import TaxmanMascot from '../components/TaxmanMascot'
 import { useRef } from 'react'
 
 const Landing = () => {
@@ -84,43 +83,36 @@ const Landing = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Help Taxman by hunting the bots and earning rewards
+            Join the Taxman. Donate. Earn rewards, burn tokens and build together.
           </motion.p>
 
-          <motion.button
-            className="btn-taxman bg-taxman-green text-taxman-black hover:bg-taxman-green/90 relative z-10"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleBeginAudit}
-          >
-            START HUNTING
-          </motion.button>
-        </motion.div>
-
-        {/* Taxman Hero Image */}
-        <motion.div
-          className="absolute right-10 md:right-20 bottom-10 w-72 h-96 md:w-80 md:h-[28rem]"
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-        >
-          <div className="relative w-full h-full">
-            <img 
-              src="/taxman-hero.jpg" 
-              alt="The Taxman - A mysterious figure in a business suit with a money bag for a head"
-              className="w-full h-full object-cover rounded-lg shadow-2xl border-4 border-taxman-gold/30"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-taxman-black/30 to-transparent rounded-lg"></div>
-            <div className="absolute bottom-4 left-4 right-4">
-              <div className="text-taxman-gold text-sm font-headline text-center">
-                THE TAXMAN AWAITS
-              </div>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <motion.button
+              className="btn-taxman bg-taxman-green text-taxman-black hover:bg-taxman-green/90 relative z-10"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleBeginAudit}
+            >
+              JOIN THE MOVEMENT
+            </motion.button>
+            
+            <motion.button
+              className="btn-taxman text-taxman-gold border-taxman-gold hover:bg-taxman-gold/10 relative z-10"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.7 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              disabled
+            >
+              BUY NOW - COMING SOON
+            </motion.button>
           </div>
         </motion.div>
+
 
         {/* Scroll Indicator */}
         <motion.div
@@ -139,6 +131,33 @@ const Landing = () => {
         </motion.div>
       </section>
 
+      {/* Contract Address Section */}
+      <section className="relative py-20 px-6 bg-taxman-black">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl font-headline text-taxman-gold mb-6">
+              TREASURY WALLET
+            </h2>
+            <div className="bg-taxman-charcoal border-2 border-taxman-gold/30 p-6 rounded-lg">
+              <div className="text-taxman-offwhite/50 text-lg font-mono mb-2">
+                COMING SOON
+              </div>
+              <div className="text-taxman-green text-sm">
+                Treasury wallet address will be available at launch
+              </div>
+              <div className="text-taxman-gold/70 text-xs mt-2">
+                Send donations directly - no wallet connection required
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Mission Section */}
       <section className="relative py-32 px-6 bg-taxman-charcoal">
         <div className="max-w-6xl mx-auto">
@@ -149,25 +168,25 @@ const Landing = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-6xl font-headline text-taxman-gold mb-12 text-center">
-              THE GAME IS LIVE
+              THE MOVEMENT IS LIVE
             </h2>
             
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 {
-                  title: 'ZERO ENTRY FEE',
-                  desc: 'Join the hunt for free. All skill levels welcome!',
-                  icon: ''
+                  title: 'COMMUNITY DONATIONS',
+                  desc: 'Donate any amount. Support the cause. Get rewarded.',
+                  icon: '💰'
                 },
                 {
-                  title: 'BOT HUNTING',
-                  desc: 'Find bots, earn points, get rewards.',
-                  icon: ''
+                  title: 'DAILY AIRDROPS',
+                  desc: '50% goes to daily lotteries, NFTs, and status roles.',
+                  icon: '🎁'
                 },
                 {
-                  title: 'MEME REWARDS',
-                  desc: 'Top hunters get exclusive memes and prizes.',
-                  icon: ''
+                  title: 'TOKEN BURNS',
+                  desc: '50% burns tokens and supports the chart floor.',
+                  icon: '🔥'
                 }
               ].map((item, i) => (
                 <motion.div
@@ -199,10 +218,10 @@ const Landing = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-6xl font-headline text-taxman-offwhite mb-8">
-              JOIN THE HUNT
+              JOIN THE MOVEMENT
             </h2>
             <p className="text-xl text-taxman-gold mb-12">
-              The bots are running wild. Time to hunt them down and earn some memes! 🎮
+              Build the community. Donate to the treasury. Get rewarded with airdrops and burns! 💰
             </p>
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -213,7 +232,7 @@ const Landing = () => {
                   navigate('/dashboard')
                 }}
               >
-                START HUNTING
+                DONATE NOW
               </button>
               <button
                 className="btn-taxman text-taxman-gold border-taxman-gold hover:bg-taxman-gold/10"
@@ -222,8 +241,34 @@ const Landing = () => {
                   navigate('/manifesto')
                 }}
               >
-                GAME RULES
+                HOW IT WORKS
               </button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Taxman Image at Bottom */}
+      <section className="relative py-20 px-6 bg-taxman-charcoal">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="relative w-full max-w-md mx-auto">
+              <img 
+                src="/taxman-hero.jpg" 
+                alt="The Taxman - A mysterious figure in a business suit with a money bag for a head"
+                className="w-full h-auto rounded-lg shadow-2xl border-4 border-taxman-gold/30"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-taxman-black/30 to-transparent rounded-lg"></div>
+              <div className="absolute bottom-4 left-4 right-4">
+                <div className="text-taxman-gold text-lg font-headline text-center">
+                  THE TAXMAN AWAITS
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
