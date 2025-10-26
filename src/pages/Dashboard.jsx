@@ -31,6 +31,13 @@ const Dashboard = () => {
     time: '2h 35m ago'
   }
 
+  // Recent Burn Transactions (Proof of Burns)
+  const recentBurns = [
+    { tx: '1A2B3C...4D5E', amount: '15.5 SOL', price: '$142.50', wallet: 'Sent to burn wallet', time: '2h ago' },
+    { tx: '6F7G8H...9I0J', amount: '8.3 SOL', price: '$141.20', wallet: 'Sent to burn wallet', time: '5h ago' },
+    { tx: 'KL1M2N...3O4P', amount: '22.1 SOL', price: '$143.80', wallet: 'Sent to burn wallet', time: '8h ago' },
+  ]
+
   // Mock chart data
   const chartData = [
     { time: '00:00', price: 0.000045 },
@@ -389,14 +396,29 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              {/* Upcoming Lottery */}
+              {/* Recent Burn Transactions */}
               <div>
-                <div className="text-taxman-gold/70 text-sm font-headline mb-3">NEXT DRAW TIME</div>
-                <div className="bg-taxman-black/50 p-3 border-l-2 border-taxman-green">
-                  <div className="text-xs text-taxman-offwhite mb-1">Countdown</div>
-                  <div className="text-sm font-headline text-taxman-green">
-                    {formatTime(nextAirdrop)}
-                  </div>
+                <div className="text-taxman-red/70 text-sm font-headline mb-3">RECENT BURN TRANSACTIONS</div>
+                <div className="space-y-2">
+                  {recentBurns.map((burn, i) => (
+                    <motion.div
+                      key={i}
+                      className="bg-taxman-black/50 p-3 border-l-4 border-taxman-red"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <div className="font-mono text-xs text-taxman-offwhite">{burn.tx}</div>
+                        <div className="text-taxman-red font-headline text-sm">{burn.amount}</div>
+                      </div>
+                      <div className="text-xs text-taxman-offwhite/70 flex items-center justify-between">
+                        <span>Bought at {burn.price}</span>
+                        <span className="text-taxman-red">{burn.wallet}</span>
+                      </div>
+                      <div className="text-xs text-taxman-offwhite/50 mt-1">{burn.time}</div>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
             </div>
