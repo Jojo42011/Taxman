@@ -20,12 +20,12 @@ const Manifesto = () => {
     {
       id: 2,
       title: 'RULE 2: THE 50/50 SPLIT',
-      content: '50% goes to daily airdrops, NFTs, and status roles. 50% burns tokens, fights bots, and supports the floor.',
+      content: '50% goes to lotteries, NFTs, and exclusive rewards. 50% burns tokens, fights bots, and supports the floor.',
       details: [
-        '50% to airdrop pool for community rewards',
-        'Daily token lotteries and NFT drops',
-        '50% to burn pool for token deflation',
-        'Strategic floor support and buybacks'
+        '50% to rewards pool: lotteries, NFTs, status roles & exclusive access',
+        'Daily token lotteries, NFT drops, and tier-based airdrops',
+        '50% to burn pool: token deflation & strategic buybacks',
+        'Fights bots, supports chart floor, and maintains value'
       ]
     },
     {
@@ -33,7 +33,7 @@ const Manifesto = () => {
       title: 'RULE 3: THE REWARDS',
       content: 'Higher donations = higher status = better airdrop chances. The community builds together!',
       details: [
-        'Status levels: Citizen → Contributor → Supporter → VIP → Legend',
+        'Status levels: BagSquire → BagKnights → BagPrinces → BagLords',
         'Higher status = better airdrop odds',
         'Exclusive NFTs and Discord roles',
         'Community governance and voting rights'

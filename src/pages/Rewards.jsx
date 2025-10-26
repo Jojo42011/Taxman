@@ -1,13 +1,16 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Rewards = () => {
+  const navigate = useNavigate()
   const [selectedTier, setSelectedTier] = useState(null)
 
   const rewardTiers = [
     {
-      name: 'CITIZEN',
-      minDonation: 0.002,
+      name: 'BagSquire',
+      minDonation: '0.001',
+      maxDonation: '0.009',
       bgClass: 'bg-taxman-charcoal',
       borderClass: 'border-taxman-offwhite/30',
       benefits: [
@@ -21,9 +24,10 @@ const Rewards = () => {
       governance: 'View only'
     },
     {
-      name: 'CONTRIBUTOR',
-      minDonation: 0.02,
-      bgClass: 'bg-taxman-green',
+      name: 'BagKnights',
+      minDonation: '0.01',
+      maxDonation: '0.09',
+      bgClass: 'bg-taxman-charcoal',
       borderClass: 'border-taxman-green/50',
       benefits: [
         '2x airdrop odds',
@@ -37,9 +41,10 @@ const Rewards = () => {
       governance: 'Comment only'
     },
     {
-      name: 'SUPPORTER',
-      minDonation: 0.2,
-      bgClass: 'bg-taxman-gold',
+      name: 'BagPrinces',
+      minDonation: '0.1',
+      maxDonation: '0.9',
+      bgClass: 'bg-taxman-charcoal',
       borderClass: 'border-taxman-gold/50',
       benefits: [
         '5x airdrop odds',
@@ -54,9 +59,10 @@ const Rewards = () => {
       governance: 'Vote on proposals'
     },
     {
-      name: 'VIP',
-      minDonation: 2,
-      bgClass: 'bg-taxman-red',
+      name: 'BagLords',
+      minDonation: '1',
+      maxDonation: '∞',
+      bgClass: 'bg-taxman-charcoal',
       borderClass: 'border-taxman-red/50',
       benefits: [
         '10x airdrop odds',
@@ -65,30 +71,12 @@ const Rewards = () => {
         'Mythic NFT drops',
         'Direct team access',
         'Custom Discord roles',
-        'Governance voting power'
+        'Governance voting power',
+        'Revenue sharing'
       ],
       airdropOdds: '10x',
       nftAccess: 'Mythic',
       governance: 'Full voting rights'
-    },
-    {
-      name: 'LEGEND',
-      minDonation: 20,
-      bgClass: 'bg-taxman-offwhite',
-      borderClass: 'border-taxman-offwhite',
-      benefits: [
-        '20x airdrop odds',
-        'Legendary Discord status',
-        'Guaranteed daily rewards',
-        'One-of-a-kind NFTs',
-        'Direct founder access',
-        'Custom title & badge',
-        'Governance veto power',
-        'Revenue sharing'
-      ],
-      airdropOdds: '20x',
-      nftAccess: 'One-of-a-kind',
-      governance: 'Veto power'
     }
   ]
 
@@ -139,14 +127,6 @@ const Rewards = () => {
     }
   ]
 
-  const currentStats = {
-    totalDonated: 2847392,
-    airdropPool: 1423696,
-    burnPool: 1423696,
-    nextAirdrop: '2h 15m',
-    activeMembers: 1247
-  }
-
   return (
     <div className="min-h-screen pt-24 pb-20">
       {/* Header */}
@@ -169,48 +149,6 @@ const Rewards = () => {
         </div>
       </section>
 
-      {/* Current Stats */}
-      <section className="relative py-12 px-6 bg-taxman-charcoal">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-headline text-taxman-gold mb-8 text-center">
-              LIVE COMMUNITY STATS
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <div className="bg-taxman-black/50 border-2 border-taxman-green/30 p-6 text-center">
-                <div className="text-3xl font-headline text-taxman-green mb-2">
-                  ${currentStats.totalDonated.toLocaleString()}
-                </div>
-                <div className="text-sm text-taxman-gold/70">TOTAL DONATED</div>
-              </div>
-              <div className="bg-taxman-black/50 border-2 border-taxman-gold/30 p-6 text-center">
-                <div className="text-3xl font-headline text-taxman-gold mb-2">
-                  ${currentStats.airdropPool.toLocaleString()}
-                </div>
-                <div className="text-sm text-taxman-gold/70">AIRDROP POOL</div>
-              </div>
-              <div className="bg-taxman-black/50 border-2 border-taxman-red/30 p-6 text-center">
-                <div className="text-3xl font-headline text-taxman-red mb-2">
-                  ${currentStats.burnPool.toLocaleString()}
-                </div>
-                <div className="text-sm text-taxman-gold/70">BURN POOL</div>
-              </div>
-              <div className="bg-taxman-black/50 border-2 border-taxman-green/30 p-6 text-center">
-                <div className="text-3xl font-headline text-taxman-green mb-2">
-                  {currentStats.activeMembers.toLocaleString()}
-                </div>
-                <div className="text-sm text-taxman-gold/70">ACTIVE MEMBERS</div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Tier System */}
       <section className="relative py-20 px-6">
         <div className="max-w-7xl mx-auto">
@@ -224,7 +162,7 @@ const Rewards = () => {
               COMMUNITY TIERS
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {rewardTiers.map((tier, index) => (
                 <motion.div
                   key={tier.name}
@@ -245,28 +183,24 @@ const Rewards = () => {
 
                   {/* Min Donation */}
                   <div className="text-center mb-4">
-                    <div className={`text-2xl font-headline mb-2 ${
-                      tier.name === 'LEGEND' ? 'text-taxman-black' : 'text-taxman-offwhite'
-                    }`}>
-                      ${tier.minDonation}+
+                    <div className="text-2xl font-headline mb-2 text-taxman-offwhite">
+                      {tier.maxDonation === '∞' ? `${tier.minDonation}+ SOL` : `${tier.minDonation}-${tier.maxDonation} SOL`}
                     </div>
-                    <div className={`text-sm ${
-                      tier.name === 'LEGEND' ? 'text-taxman-black/70' : 'text-taxman-gold/70'
-                    }`}>MIN DONATION</div>
+                    <div className="text-sm text-taxman-gold/70">SOL RANGE</div>
                   </div>
 
                   {/* Key Stats */}
                   <div className="space-y-2 mb-6">
                     <div className="flex justify-between text-sm">
-                      <span className={tier.name === 'LEGEND' ? 'text-taxman-black/70' : 'text-taxman-offwhite/70'}>Airdrop Odds:</span>
+                      <span className="text-taxman-offwhite/70">Airdrop Odds:</span>
                       <span className="text-taxman-green font-headline">{tier.airdropOdds}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className={tier.name === 'LEGEND' ? 'text-taxman-black/70' : 'text-taxman-offwhite/70'}>NFT Access:</span>
+                      <span className="text-taxman-offwhite/70">NFT Access:</span>
                       <span className="text-taxman-gold font-headline">{tier.nftAccess}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className={tier.name === 'LEGEND' ? 'text-taxman-black/70' : 'text-taxman-offwhite/70'}>Governance:</span>
+                      <span className="text-taxman-offwhite/70">Governance:</span>
                       <span className="text-taxman-red font-headline">{tier.governance}</span>
                     </div>
                   </div>
@@ -276,9 +210,7 @@ const Rewards = () => {
                     {tier.benefits.map((benefit, i) => (
                       <div key={i} className="flex items-start space-x-2">
                         <div className="text-taxman-green text-sm mt-0.5">▸</div>
-                        <div className={`text-xs ${
-                          tier.name === 'LEGEND' ? 'text-taxman-black/80' : 'text-taxman-offwhite/80'
-                        }`}>{benefit}</div>
+                        <div className="text-xs text-taxman-offwhite/80">{benefit}</div>
                       </div>
                     ))}
                   </div>
@@ -427,7 +359,7 @@ const Rewards = () => {
                 className="btn-taxman bg-taxman-green text-taxman-black hover:bg-taxman-green/90"
                 onClick={() => {
                   if (window.playSound) window.playSound('cash')
-                  window.location.href = '/dashboard'
+                  navigate('/dashboard')
                 }}
               >
                 START DONATING
