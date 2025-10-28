@@ -8,7 +8,18 @@ const Dashboard = () => {
   const [totalDonated, setTotalDonated] = useState(TAXMAN_DATA.totalDonated)
   const [airdropPool, setAirdropPool] = useState(TAXMAN_DATA.airdropPool)
   const [burnPool, setBurnPool] = useState(TAXMAN_DATA.burnPool)
-  const [nextAirdrop, setNextAirdrop] = useState(TAXMAN_DATA.nextAirdropInSeconds)
+  
+  // Load timer from localStorage or use default 24 hours
+  const getInitialTimer = () => {
+    const stored = localStorage.getItem('nextAirdropTimer')
+    if (stored) {
+      const timeLeft = parseInt(stored) - Math.floor(Date.now() / 1000)
+      return timeLeft > 0 ? timeLeft : 86400
+    }
+    return 86400 // 24 hours
+  }
+  
+  const [nextAirdrop, setNextAirdrop] = useState(getInitialTimer)
   const [donationAmount, setDonationAmount] = useState('')
   const [walletCopied, setWalletCopied] = useState(false)
   
@@ -43,9 +54,26 @@ const Dashboard = () => {
       return () => clearInterval(interval)
     }
 
-    // Countdown timer
+    // Initialize timer end time if not set
+    if (!localStorage.getItem('nextAirdropTimer')) {
+      const endTime = Math.floor(Date.now() / 1000) + 86400
+      localStorage.setItem('nextAirdropTimer', endTime.toString())
+    }
+
+    // Countdown timer with persistence
     const timer = setInterval(() => {
-      setNextAirdrop(prev => prev > 0 ? prev - 1 : 3600)
+      const storedEndTime = localStorage.getItem('nextAirdropTimer')
+      if (storedEndTime) {
+        const timeLeft = parseInt(storedEndTime) - Math.floor(Date.now() / 1000)
+        if (timeLeft > 0) {
+          setNextAirdrop(timeLeft)
+        } else {
+          // Timer expired, reset to 24 hours
+          const newEndTime = Math.floor(Date.now() / 1000) + 86400
+          localStorage.setItem('nextAirdropTimer', newEndTime.toString())
+          setNextAirdrop(86400)
+        }
+      }
     }, 1000)
 
     return () => clearInterval(timer)

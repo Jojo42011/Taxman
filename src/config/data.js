@@ -8,7 +8,7 @@ export const TAXMAN_DATA = {
   burnPool: 0,
   
   // Timer Data
-  nextAirdropInSeconds: 3600, // Default to 1 hour
+  nextAirdropInSeconds: 86400, // Default to 24 hours
   
   // Hall of Fame - Replace with real donor data
   hallOfFame: [

@@ -88,10 +88,26 @@ const Landing = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <motion.button
-              className="btn-taxman bg-taxman-green text-taxman-black hover:bg-taxman-green/90 relative z-10"
+              className="btn-taxman bg-taxman-gold text-taxman-black hover:bg-taxman-gold/90 relative z-10"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                if (window.playSound) window.playSound('cash')
+                // Open Jupiter or Birdeye for Solana token purchase
+                window.open('https://jup.ag/swap', '_blank')
+              }}
+            >
+              BUY $TAXMAN
+            </motion.button>
+            
+            <motion.button
+              className="btn-taxman bg-taxman-green text-taxman-black hover:bg-taxman-green/90 relative z-10"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.65 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleBeginAudit}
@@ -229,6 +245,15 @@ const Landing = () => {
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <button
+                className="btn-taxman bg-taxman-gold text-taxman-black hover:bg-taxman-gold/90"
+                onClick={() => {
+                  if (window.playSound) window.playSound('cash')
+                  window.open('https://jup.ag/swap', '_blank')
+                }}
+              >
+                BUY $TAXMAN
+              </button>
+              <button
                 className="btn-taxman bg-taxman-green text-taxman-black hover:bg-taxman-green/90"
                 onClick={() => {
                   if (window.playSound) window.playSound('cash')
@@ -247,7 +272,7 @@ const Landing = () => {
                 HOW IT WORKS
               </button>
               <button
-                className="btn-taxman bg-taxman-gold text-taxman-black hover:bg-taxman-gold/90"
+                className="btn-taxman bg-taxman-green/20 text-taxman-green border-taxman-green hover:bg-taxman-green/10"
                 onClick={() => {
                   if (window.playSound) window.playSound('click')
                   window.open('https://discord.gg/kAzq2gszyV', '_blank')
