@@ -1,9 +1,14 @@
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Manifesto = () => {
   const [stampedClauses, setStampedClauses] = useState({})
   const [hoveredClause, setHoveredClause] = useState(null)
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   const clauses = [
     {
@@ -33,10 +38,10 @@ const Manifesto = () => {
       title: 'RULE 3: THE REWARDS',
       content: 'Higher donations = higher status = better airdrop chances. The community builds together!',
       details: [
-        'Status levels: BagSquire → BagKnights → BagPrinces → BagLords',
-        'Higher status = better airdrop odds',
-        'Exclusive NFTs and Discord roles',
-        'Community governance and voting rights'
+        'Status levels: TaxAgent → Field Agent → Special Agent → Chief Agent',
+        'Airdrop lottery odds: 1x → 2x → 5x → 10x',
+        'Shilling bonuses: 10% → 20% → 30% → 50%',
+        'Exclusive Discord roles, raids, and early access'
       ]
     }
   ]

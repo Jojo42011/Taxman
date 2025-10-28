@@ -56,7 +56,7 @@ const Landing = () => {
                   ease: 'linear'
                 }}
               >
-                ${(Math.random() * 1000000).toFixed(2)}
+                $0.00
               </motion.div>
             ))}
           </div>
@@ -106,9 +106,12 @@ const Landing = () => {
               transition={{ duration: 0.5, delay: 0.7 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              disabled
+              onClick={() => {
+                if (window.playSound) window.playSound('click')
+                window.open('https://discord.gg/kAzq2gszyV', '_blank')
+              }}
             >
-              BUY NOW - COMING SOON
+              JOIN DISCORD
             </motion.button>
           </div>
         </motion.div>
@@ -242,6 +245,15 @@ const Landing = () => {
                 }}
               >
                 HOW IT WORKS
+              </button>
+              <button
+                className="btn-taxman bg-taxman-gold text-taxman-black hover:bg-taxman-gold/90"
+                onClick={() => {
+                  if (window.playSound) window.playSound('click')
+                  window.open('https://discord.gg/kAzq2gszyV', '_blank')
+                }}
+              >
+                JOIN DISCORD
               </button>
             </div>
           </motion.div>

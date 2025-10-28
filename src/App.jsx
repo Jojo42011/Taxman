@@ -3,7 +3,6 @@ import Navigation from './components/Navigation'
 import Landing from './pages/Landing'
 import Manifesto from './pages/Manifesto'
 import Dashboard from './pages/Dashboard'
-import Propaganda from './pages/Propaganda'
 import Rewards from './pages/Rewards'
 import AudioManager from './components/AudioManager'
 
@@ -17,7 +16,6 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/manifesto" element={<Manifesto />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/propaganda" element={<Propaganda />} />
           <Route path="/rewards" element={<Rewards />} />
         </Routes>
       </div>

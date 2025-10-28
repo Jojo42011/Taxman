@@ -10,8 +10,7 @@ const Navigation = () => {
     { path: '/', label: 'HOME' },
     { path: '/manifesto', label: 'HOW IT WORKS' },
     { path: '/dashboard', label: 'COMMUNITY HUB' },
-    { path: '/rewards', label: 'REWARDS' },
-    { path: '/propaganda', label: 'MEMES' }
+    { path: '/rewards', label: 'REWARDS' }
   ]
 
   return (

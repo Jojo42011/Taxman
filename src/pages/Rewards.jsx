@@ -1,128 +1,129 @@
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const Rewards = () => {
   const navigate = useNavigate()
   const [selectedTier, setSelectedTier] = useState(null)
 
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
   const rewardTiers = [
     {
-      name: 'BagSquire',
+      name: 'TaxAgent',
       minDonation: '0.001',
       maxDonation: '0.009',
       bgClass: 'bg-taxman-charcoal',
       borderClass: 'border-taxman-offwhite/30',
       benefits: [
-        'Basic airdrop eligibility',
-        'Community Discord access',
-        'Weekly lottery entries',
-        'Taxman NFT collection access'
+        'Airdrop Lottery Access',
+        'Squire Discord role + badge',
+        '+10% shilling bonus'
       ],
       airdropOdds: '1x',
       nftAccess: 'Basic',
-      governance: 'View only'
+      status: 'Community Member'
     },
     {
-      name: 'BagKnights',
+      name: 'FieldAgent',
       minDonation: '0.01',
       maxDonation: '0.09',
       bgClass: 'bg-taxman-charcoal',
       borderClass: 'border-taxman-green/50',
       benefits: [
-        '2x airdrop odds',
-        'Exclusive Discord channels',
-        'Daily lottery entries',
-        'Rare NFT drops',
-        'Early access to features'
+        'FieldAgent Discord role + badge',
+        '2x Airdrop Lottery Odds',
+        '+20% shilling bonus',
+        'Field Agent Raid - Top 10 get 50k tokens'
       ],
       airdropOdds: '2x',
       nftAccess: 'Rare',
-      governance: 'Comment only'
+      status: 'Active Contributor'
     },
     {
-      name: 'BagPrinces',
+      name: 'SpecialAgent',
       minDonation: '0.1',
       maxDonation: '0.9',
       bgClass: 'bg-taxman-charcoal',
       borderClass: 'border-taxman-gold/50',
       benefits: [
-        '5x airdrop odds',
-        'VIP Discord channels',
-        'Multiple daily entries',
-        'Legendary NFT drops',
-        'Priority support',
-        'Exclusive merchandise'
+        'SpecialAgent role + badge',
+        '5x Airdrop Lottery Odds',
+        '+30% shilling bonus',
+        'Custom NFT access',
+        'Exclusive channel for early launches',
+        'Special Agent Raid - Top 10 get 100k tokens'
       ],
       airdropOdds: '5x',
       nftAccess: 'Legendary',
-      governance: 'Vote on proposals'
+      status: 'VIP Supporter'
     },
     {
-      name: 'BagLords',
+      name: 'ChiefAgent',
       minDonation: '1',
       maxDonation: '∞',
       bgClass: 'bg-taxman-charcoal',
       borderClass: 'border-taxman-red/50',
       benefits: [
-        '10x airdrop odds',
-        'Private VIP channels',
-        'Unlimited lottery entries',
-        'Mythic NFT drops',
-        'Direct team access',
-        'Custom Discord roles',
-        'Governance voting power',
-        'Revenue sharing'
+        'ChiefAgent role + badge',
+        '10x Airdrop Lottery Odds',
+        '+50% shilling bonus',
+        'Mythic NFT access',
+        'Co-create future coins with devs',
+        'Chief Agent Raid - Top 10 get 250k tokens'
       ],
       airdropOdds: '10x',
       nftAccess: 'Mythic',
-      governance: 'Full voting rights'
+      status: 'Legendary Member'
     }
   ]
 
   const rewardTypes = [
     {
       title: 'DAILY AIRDROPS',
-      description: '50% of all donations go to daily airdrops',
+      description: '50% of donations fund daily rewards',
       icon: '🎁',
       details: [
-        'Token airdrops based on tier odds',
+        'Tier-based odds (1x to 10x)',
+        'Daily lottery drawings',
         'NFT drops for higher tiers',
-        'Special event multipliers',
-        'Community milestone bonuses'
+        'Special event bonuses'
       ]
     },
     {
       title: 'DISCORD ROLES',
-      description: 'Exclusive roles and channels based on tier',
+      description: 'Status roles and exclusive access',
       icon: '👑',
       details: [
-        'Tier-specific Discord channels',
-        'Custom role colors and badges',
-        'Special permissions and access',
-        'Exclusive voice channels'
+        'Tier-based custom roles',
+        'Exclusive channels',
+        'Priority access',
+        'Direct team communication'
       ]
     },
     {
-      title: 'NFT COLLECTION',
-      description: 'Rare NFTs for community members',
-      icon: '🎨',
+      title: 'SHILLING BONUS',
+      description: 'Earn extra for spreading the word',
+      icon: '📢',
       details: [
-        'Tier-based NFT rarity',
-        'Utility NFTs with special powers',
-        'Trading and marketplace access',
-        'Exclusive art drops'
+        'Bonus rewards for sharing',
+        'Tier-based bonus rates',
+        'Social media campaigns',
+        'Community growth incentives'
       ]
     },
     {
-      title: 'GOVERNANCE RIGHTS',
-      description: 'Vote on community decisions',
-      icon: '🗳️',
+      title: 'EXCLUSIVE ACCESS',
+      description: 'Early notice and priority access',
+      icon: '🔒',
       details: [
-        'Proposal voting power',
-        'Treasury fund allocation',
-        'Feature development priorities',
-        'Community event planning'
+        'Early launch announcements',
+        'New feature priority',
+        'Beta testing access',
+        'Founder perks'
       ]
     }
   ]
@@ -192,16 +193,14 @@ const Rewards = () => {
                   {/* Key Stats */}
                   <div className="space-y-2 mb-6">
                     <div className="flex justify-between text-sm">
-                      <span className="text-taxman-offwhite/70">Airdrop Odds:</span>
+                      <span className="text-taxman-offwhite/70">Airdrop Lottery Odds:</span>
                       <span className="text-taxman-green font-headline">{tier.airdropOdds}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-taxman-offwhite/70">NFT Access:</span>
-                      <span className="text-taxman-gold font-headline">{tier.nftAccess}</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-taxman-offwhite/70">Governance:</span>
-                      <span className="text-taxman-red font-headline">{tier.governance}</span>
+                      <span className="text-taxman-offwhite/70">50% Burns:</span>
+                      <span className="text-taxman-red font-headline">
+                        {tier.maxDonation === '∞' ? `${(parseFloat(tier.minDonation) * 0.5).toFixed(4)}+ SOL` : `${(parseFloat(tier.minDonation) * 0.5).toFixed(4)}-${(parseFloat(tier.maxDonation) * 0.5).toFixed(4)} SOL`}
+                      </span>
                     </div>
                   </div>
 
@@ -298,20 +297,20 @@ const Rewards = () => {
                 {
                   step: '01',
                   title: 'DONATE',
-                  description: 'Send any amount to our community treasury wallet',
-                  details: 'Minimum $0.002 to become a Citizen. Higher amounts unlock better tiers.'
+                  description: 'Send SOL to our community treasury wallet',
+                  details: 'Donate 0.001-0.009 SOL to become TaxAgent. Higher amounts unlock Field Agent, Special Agent, or Chief Agent tiers.'
                 },
                 {
                   step: '02',
                   title: 'UNLOCK TIER',
-                  description: 'Your donation amount determines your community tier',
-                  details: 'Tiers are calculated based on your total lifetime donations to the treasury.'
+                  description: 'Your donation amount unlocks your tier status',
+                  details: 'TaxAgent → Field Agent → Special Agent → Chief Agent. Each tier gets better airdrop odds and exclusive perks.'
                 },
                 {
                   step: '03',
                   title: 'EARN REWARDS',
-                  description: 'Start receiving airdrops, NFTs, and exclusive access',
-                  details: '50% of donations fund rewards, 50% fights bots and supports the chart.'
+                  description: 'Receive airdrops, NFTs, roles, and bonuses',
+                  details: '50% of donations fund rewards (airdrops, raids, shilling bonuses), 50% burns tokens and supports the chart.'
                 }
               ].map((step, index) => (
                 <motion.div
@@ -350,7 +349,7 @@ const Rewards = () => {
               JOIN THE COMMUNITY
             </h2>
             <p className="text-xl text-taxman-gold mb-12">
-              Start your journey as a Citizen and climb the ranks. 
+              Start your journey as TaxAgent and climb to Chief Agent. 
               Every donation counts toward building a stronger community!
             </p>
             
@@ -368,7 +367,7 @@ const Rewards = () => {
                 className="btn-taxman text-taxman-gold border-taxman-gold hover:bg-taxman-gold/10"
                 onClick={() => {
                   if (window.playSound) window.playSound('click')
-                  window.open('https://discord.gg/taxman', '_blank')
+                  window.open('https://discord.gg/kAzq2gszyV', '_blank')
                 }}
               >
                 JOIN DISCORD

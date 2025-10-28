@@ -1,78 +1,54 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
+import { TAXMAN_DATA } from '../config/data'
 
 const Dashboard = () => {
   const navigate = useNavigate()
-  const [totalDonated, setTotalDonated] = useState(2847392)
-  const [airdropPool, setAirdropPool] = useState(1423696)
-  const [burnPool, setBurnPool] = useState(1423696)
-  const [nextAirdrop, setNextAirdrop] = useState(3600)
+  const [totalDonated, setTotalDonated] = useState(TAXMAN_DATA.totalDonated)
+  const [airdropPool, setAirdropPool] = useState(TAXMAN_DATA.airdropPool)
+  const [burnPool, setBurnPool] = useState(TAXMAN_DATA.burnPool)
+  const [nextAirdrop, setNextAirdrop] = useState(TAXMAN_DATA.nextAirdropInSeconds)
   const [donationAmount, setDonationAmount] = useState('')
+  const [walletCopied, setWalletCopied] = useState(false)
   
-  // Hall of Fame Donators
-  const hallOfFame = [
-    { rank: 1, address: 'Tgx1P...a3f1', donated: 25.5, status: 'BagLords' },
-    { rank: 2, address: 'Tgx8c...7b2e', donated: 18.2, status: 'BagLords' },
-    { rank: 3, address: 'Tgx3f...c9d4', donated: 12.8, status: 'BagPrinces' },
-    { rank: 4, address: 'Tgx6d...1a7f', donated: 8.5, status: 'BagPrinces' },
-    { rank: 5, address: 'Tgx9b...4e8a', donated: 5.2, status: 'BagKnights' },
-    { rank: 6, address: 'Tgxa7...k3m9', donated: 3.1, status: 'BagKnights' },
-    { rank: 7, address: 'Tgx5d...n8q3', donated: 1.8, status: 'BagPrinces' },
-    { rank: 8, address: 'Tgx9f...p2w1', donated: 0.05, status: 'BagSquire' },
-  ]
+  const TREASURY_WALLET = 'H5e1XYbX6cSYcjTVYvwaTujaLU83cg8hRPrvXpKzXXUw'
   
-  // Today's Lottery Winner
-  const todaysWinner = {
-    address: 'Tgx7h...k9m3',
-    prize: '500 SOL',
-    prizeType: 'Token Airdrop',
-    time: '2h 35m ago'
-  }
+  // Hall of Fame Donators - Empty until real data available
+  const hallOfFame = TAXMAN_DATA.hallOfFame
+  
+  // Today's Lottery Winners
+  const todaysWinner = TAXMAN_DATA.todaysWinner
+  const secondPlace = TAXMAN_DATA.secondPlace
+  const thirdPlace = TAXMAN_DATA.thirdPlace
 
   // Recent Burn Transactions (Proof of Burns)
-  const recentBurns = [
-    { tx: '1A2B3C...4D5E', amount: '15.5 SOL', price: '$142.50', wallet: 'Sent to burn wallet', time: '2h ago' },
-    { tx: '6F7G8H...9I0J', amount: '8.3 SOL', price: '$141.20', wallet: 'Sent to burn wallet', time: '5h ago' },
-    { tx: 'KL1M2N...3O4P', amount: '22.1 SOL', price: '$143.80', wallet: 'Sent to burn wallet', time: '8h ago' },
-  ]
+  const recentBurns = TAXMAN_DATA.recentBurns
 
-  // Mock chart data
-  const chartData = [
-    { time: '00:00', price: 0.000045 },
-    { time: '04:00', price: 0.000052 },
-    { time: '08:00', price: 0.000048 },
-    { time: '12:00', price: 0.000061 },
-    { time: '16:00', price: 0.000075 },
-    { time: '20:00', price: 0.000068 },
-    { time: '24:00', price: 0.000082 },
-  ]
-
-  // Upcoming airdrops
-  const upcomingAirdrops = [
-    { type: 'Token Airdrop', pool: 500000, time: '2h 15m' },
-    { type: 'NFT Drop', pool: 200000, time: '6h 30m' },
-    { type: 'Status Role', pool: 100000, time: '12h 45m' },
-  ]
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   useEffect(() => {
-    // Animate counters
-    const interval = setInterval(() => {
-      setTotalDonated(prev => prev + Math.floor(Math.random() * 100))
-      setAirdropPool(prev => prev + Math.floor(Math.random() * 50))
-      setBurnPool(prev => prev + Math.floor(Math.random() * 50))
-    }, 3000)
+    // Only auto-increment if enabled (disabled for production)
+    if (TAXMAN_DATA.enableAutoIncrement) {
+      // Animate counters
+      const interval = setInterval(() => {
+        setTotalDonated(prev => prev + Math.floor(Math.random() * 100))
+        setAirdropPool(prev => prev + Math.floor(Math.random() * 50))
+        setBurnPool(prev => prev + Math.floor(Math.random() * 50))
+      }, 3000)
+
+      return () => clearInterval(interval)
+    }
 
     // Countdown timer
     const timer = setInterval(() => {
       setNextAirdrop(prev => prev > 0 ? prev - 1 : 3600)
     }, 1000)
 
-    return () => {
-      clearInterval(interval)
-      clearInterval(timer)
-    }
+    return () => clearInterval(timer)
   }, [])
 
   const formatTime = (seconds) => {
@@ -93,6 +69,13 @@ const Dashboard = () => {
     setBurnPool(prev => prev + (amount * 0.5))
     
     setDonationAmount('')
+  }
+
+  const copyWalletAddress = () => {
+    if (window.playSound) window.playSound('click')
+    navigator.clipboard.writeText(TREASURY_WALLET)
+    setWalletCopied(true)
+    setTimeout(() => setWalletCopied(false), 2000)
   }
 
   return (
@@ -173,7 +156,7 @@ const Dashboard = () => {
             </motion.div>
           </div>
 
-          {/* Today's Lottery Winner */}
+          {/* Today's Lottery Winners */}
           <motion.div
             className="bg-taxman-charcoal border-2 border-taxman-gold/50 p-6 mb-12"
             initial={{ opacity: 0, y: 20 }}
@@ -183,17 +166,43 @@ const Dashboard = () => {
             <div className="flex items-center justify-center mb-4">
               <div className="text-6xl">🏆</div>
             </div>
-            <h2 className="text-2xl font-headline text-taxman-gold mb-4 text-center">
-              TODAY'S LOTTERY WINNER
+            <h2 className="text-2xl font-headline text-taxman-gold mb-6 text-center">
+              TODAY'S LOTTERY WINNERS
             </h2>
-            <div className="bg-taxman-black/50 border-2 border-taxman-green/50 p-6 text-center max-w-md mx-auto">
-              <div className="text-taxman-gold/70 text-sm font-headline mb-2">WINNER</div>
-              <div className="font-mono text-lg text-taxman-offwhite mb-3">{todaysWinner.address}</div>
-              <div className="text-3xl font-headline text-taxman-green mb-3">
-                {todaysWinner.prize}
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* 1st Place */}
+              <div className="bg-taxman-black/50 border-2 border-taxman-green/50 p-6 text-center">
+                <div className="text-taxman-gold/70 text-sm font-headline mb-2">🥇 1ST PLACE</div>
+                <div className="font-mono text-sm text-taxman-offwhite mb-3 break-all">{todaysWinner.address}</div>
+                <div className="text-2xl font-headline text-taxman-green mb-2">
+                  {todaysWinner.prize}
+                </div>
+                <div className="text-taxman-gold font-headline text-xs">{todaysWinner.prizeType}</div>
+                <div className="text-taxman-offwhite/50 text-xs mt-1">{todaysWinner.time}</div>
               </div>
-              <div className="text-taxman-gold font-headline text-sm mb-1">{todaysWinner.prizeType}</div>
-              <div className="text-taxman-offwhite/50 text-xs">{todaysWinner.time}</div>
+
+              {/* 2nd Place */}
+              <div className="bg-taxman-black/50 border-2 border-taxman-gold/30 p-6 text-center">
+                <div className="text-taxman-gold/70 text-sm font-headline mb-2">🥈 2ND PLACE</div>
+                <div className="font-mono text-sm text-taxman-offwhite mb-3 break-all">{secondPlace.address}</div>
+                <div className="text-xl font-headline text-taxman-gold mb-2">
+                  {secondPlace.prize}
+                </div>
+                <div className="text-taxman-gold/70 font-headline text-xs">{secondPlace.prizeType}</div>
+                <div className="text-taxman-offwhite/50 text-xs mt-1">{secondPlace.time}</div>
+              </div>
+
+              {/* 3rd Place */}
+              <div className="bg-taxman-black/50 border-2 border-taxman-offwhite/20 p-6 text-center">
+                <div className="text-taxman-gold/70 text-sm font-headline mb-2">🥉 3RD PLACE</div>
+                <div className="font-mono text-sm text-taxman-offwhite mb-3 break-all">{thirdPlace.address}</div>
+                <div className="text-lg font-headline text-taxman-offwhite mb-2">
+                  {thirdPlace.prize}
+                </div>
+                <div className="text-taxman-offwhite/70 font-headline text-xs">{thirdPlace.prizeType}</div>
+                <div className="text-taxman-offwhite/50 text-xs mt-1">{thirdPlace.time}</div>
+              </div>
             </div>
           </motion.div>
 
@@ -223,7 +232,7 @@ const Dashboard = () => {
                 HALL OF FAME DONATORS
               </h2>
               <div className="space-y-2 max-h-80 overflow-y-auto">
-                {hallOfFame.map((donator, i) => (
+                {hallOfFame.length > 0 ? hallOfFame.map((donator, i) => (
                   <motion.div
                     key={i}
                     className="bg-taxman-black/50 border-l-4 border-taxman-gold p-3"
@@ -246,7 +255,12 @@ const Dashboard = () => {
                       </div>
                     </div>
                   </motion.div>
-                ))}
+                )) : (
+                  <div className="text-center py-8">
+                    <div className="text-taxman-offwhite/50 font-headline mb-2">NO DONATORS YET</div>
+                    <div className="text-sm text-taxman-gold/70">Be the first to donate and claim your spot!</div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -268,13 +282,11 @@ const Dashboard = () => {
                       SCAN TO DONATE
                     </div>
                     <div className="bg-taxman-offwhite p-4 rounded-lg">
-                      <div className="w-48 h-48 bg-taxman-charcoal flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="text-4xl mb-2">📱</div>
-                          <div className="text-taxman-offwhite text-sm">QR CODE</div>
-                          <div className="text-taxman-green text-xs">COMING SOON</div>
-                        </div>
-                      </div>
+                      <img 
+                        src="/solana-wallet-qr.png" 
+                        alt="Scan QR code to donate to Taxman treasury"
+                        className="w-48 h-48"
+                      />
                     </div>
                   </div>
 
@@ -284,18 +296,18 @@ const Dashboard = () => {
                       TREASURY WALLET ADDRESS
                     </div>
                     <div className="bg-taxman-charcoal border-2 border-taxman-gold/30 p-4 rounded-lg">
-                      <div className="text-taxman-offwhite/50 text-sm font-mono break-all mb-2">
-                        COMING SOON
+                      <div className="text-taxman-offwhite text-sm font-mono break-all mb-2">
+                        {TREASURY_WALLET}
                       </div>
                       <div className="text-taxman-green text-xs">
                         Solana mainnet address
                       </div>
                     </div>
                     <button
-                      className="btn-taxman bg-taxman-green text-taxman-black w-full"
-                      disabled
+                      className="btn-taxman bg-taxman-green text-taxman-black w-full hover:bg-taxman-green/90"
+                      onClick={copyWalletAddress}
                     >
-                      COPY ADDRESS - COMING SOON
+                      {walletCopied ? '✓ COPIED!' : 'COPY ADDRESS'}
                     </button>
                   </div>
                 </div>
@@ -360,25 +372,25 @@ const Dashboard = () => {
                 <div className="space-y-2">
                   <div className="bg-taxman-black/50 p-2 border-l-4 border-taxman-charcoal">
                     <div className="flex justify-between items-center">
-                      <div className="text-xs text-taxman-offwhite">BagSquire</div>
+                      <div className="text-xs text-taxman-offwhite">TaxAgent</div>
                       <div className="text-sm font-headline text-taxman-gold">1x odds</div>
                     </div>
                   </div>
                   <div className="bg-taxman-black/50 p-2 border-l-4 border-taxman-green">
                     <div className="flex justify-between items-center">
-                      <div className="text-xs text-taxman-offwhite">BagKnights</div>
+                      <div className="text-xs text-taxman-offwhite">FieldAgent</div>
                       <div className="text-sm font-headline text-taxman-green">2x odds</div>
                     </div>
                   </div>
                   <div className="bg-taxman-black/50 p-2 border-l-4 border-taxman-gold">
                     <div className="flex justify-between items-center">
-                      <div className="text-xs text-taxman-offwhite">BagPrinces</div>
+                      <div className="text-xs text-taxman-offwhite">SpecialAgent</div>
                       <div className="text-sm font-headline text-taxman-gold">5x odds</div>
                     </div>
                   </div>
                   <div className="bg-taxman-black/50 p-2 border-l-4 border-taxman-red">
                     <div className="flex justify-between items-center">
-                      <div className="text-xs text-taxman-offwhite">BagLords</div>
+                      <div className="text-xs text-taxman-offwhite">ChiefAgent</div>
                       <div className="text-sm font-headline text-taxman-red">10x odds</div>
                     </div>
                   </div>
@@ -400,7 +412,7 @@ const Dashboard = () => {
               <div>
                 <div className="text-taxman-red/70 text-sm font-headline mb-3">RECENT BURN TRANSACTIONS</div>
                 <div className="space-y-2">
-                  {recentBurns.map((burn, i) => (
+                  {recentBurns.length > 0 ? recentBurns.map((burn, i) => (
                     <motion.div
                       key={i}
                       className="bg-taxman-black/50 p-3 border-l-4 border-taxman-red"
@@ -418,7 +430,12 @@ const Dashboard = () => {
                       </div>
                       <div className="text-xs text-taxman-offwhite/50 mt-1">{burn.time}</div>
                     </motion.div>
-                  ))}
+                  )) : (
+                    <div className="text-center py-4">
+                      <div className="text-taxman-offwhite/50 text-xs mb-1">NO BURNS YET</div>
+                      <div className="text-xs text-taxman-gold/70">Burns will appear here after launch</div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
